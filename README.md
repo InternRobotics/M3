@@ -14,11 +14,8 @@
 ![M³ pipeline](assets/M3.png)
 **Pipeline of M³.** Our framework consists of joint tracking and global optimization for pose estimation and a mapper for scene reconstruction. For monocular sequences, Pi3X processes retrieved historical keyframes and new frames in one inference to facilitate factor graph construction and keyframe selection. Following the Neural Gaussian and LOD architecture of ARTDECO, Gaussians are initialized via Laplacian norm and optimized jointly with camera poses.
 
-This repository contains the **static Gaussian-splatting pipeline** with
-Pi3 / Pi3X matching frontends. The default entry point uses **GS with dynamics
-disabled**. Experimental triangle mapping and dynamic-layer prototypes are not
-part of this release. Checkpoints, datasets, cluster launchers and experiment
-outputs are deliberately not included.
+M³ supports Pi3 and Pi3X matching frontends with a Gaussian-splatting mapper
+for monocular scene reconstruction.
 
 ## System architecture
 
@@ -28,9 +25,8 @@ outputs are deliberately not included.
    backend to estimate camera motion and optimize the factor graph.
 3. **Mapping:** initialize and optimize neural Gaussians using multi-resolution
    image information, with view-dependent selection and appearance modeling.
-4. **Rendering and evaluation:** export the static scene, camera estimates and
-   held-out renders. Keep frontend pose evaluation separate from mapper-refined
-   rendering evaluation.
+4. **Rendering and evaluation:** export the reconstructed scene, camera poses,
+   and held-out renders.
 
 ## Installation
 
@@ -40,7 +36,7 @@ outputs are deliberately not included.
 - Python 3.11 and a compatible CUDA-enabled PyTorch / torchvision pair.
 - Sufficient VRAM for the foundation model and the growing Gaussian map.
 
-The development experiments used an A800 80 GB, Python 3.11,
+Development environment: A800 80 GB, Python 3.11,
 PyTorch **2.10.0+cu128**, torchvision **0.25.0+cu128**, gsplat **1.5.3**,
 torch-scatter **2.1.2**, and PyPose **0.9.5**.
 
@@ -66,35 +62,30 @@ python -m pip install -r requirements.txt
 bash scripts/install_native.sh
 ```
 
-Use the **bundled** native source for:
+The installation script builds the following native extensions:
 
 - `VSLAM/`: the `mast3r_slam_backends` CUDA extension used by geometric optimization.
-- `Reconstruct/submodules/diff-gaussian-rasterization`: optimizer functions
-  `adamUpdate` and `adamUpdateBasic`; an arbitrary rasterizer package is not a substitute.
-- `Reconstruct/submodules/simple-knn`: the required `distIndex2` entry point.
+- `Reconstruct/submodules/diff-gaussian-rasterization`: Gaussian optimizer.
+- `Reconstruct/submodules/simple-knn`: nearest-neighbor search.
 - `Reconstruct/submodules/fused-ssim`: the fused SSIM loss.
 
-The viewer-related dependencies are currently imported by the application even
-with `--viewer_mode none`; EGL/OpenGL runtime libraries may therefore be needed
-on headless Linux hosts. On Ubuntu these commonly include `libegl1`, `libgl1`,
-`libopengl0`, `libglib2.0-0` and `libxrender1`.
+For headless Ubuntu environments, install the graphics runtime dependencies:
 
-Third-party sources are bundled in this repository. Each component's copyright
-headers and license notices are retained.
+```bash
+sudo apt-get install libegl1 libgl1 libopengl0 libglib2.0-0 libxrender1
+```
 
 ## Checkpoint preparation
 
-Two different model assets are needed:
+Choose a matching model (Pi3 or Pi3X) and prepare the SALAD retrieval checkpoint:
 
-| Asset | Expected location / selection |
-|---|---|
-| Pi3 **matching** checkpoint | User-supplied path with `config/yaml/pi3/pi3match.yaml` |
-| Pi3X **matching** checkpoint, as an alternative | User-supplied path with `config/yaml/pi3/pi3xmatch.yaml` |
-| SALAD retrieval checkpoint | `checkpoints/dino_salad.ckpt` |
+| Model | Checkpoint | Configuration |
+|---|---|---|
+| Pi3 | `checkpoints/pi3_matching.pt` | `config/yaml/pi3/pi3match.yaml` |
+| Pi3X | `checkpoints/pi3x_matching.pt` | `config/yaml/pi3/pi3xmatch.yaml` |
+| SALAD | `checkpoints/dino_salad.ckpt` | — |
 
-The designated matching-weight repository is
-[`cskrren/M3`](https://huggingface.co/cskrren/M3) on Hugging Face.
-**Pi3.pt (pi32) and Pi3X.pt (pi3x3) are available.**
+Download the matching checkpoints from [Hugging Face](https://huggingface.co/cskrren/M3):
 
 ```bash
 mkdir -p checkpoints
@@ -102,8 +93,8 @@ wget https://huggingface.co/cskrren/M3/resolve/main/Pi3.pt -O checkpoints/pi3_ma
 wget https://huggingface.co/cskrren/M3/resolve/main/Pi3X.pt -O checkpoints/pi3x_matching.pt
 ```
 
-Use the corresponding Pi3/Pi3X configuration for each checkpoint.
-Obtain SALAD assets under the upstream project's applicable terms.
+Download the retrieval checkpoint from [SALAD](https://github.com/serizba/salad)
+and place it at `checkpoints/dino_salad.ckpt`.
 
 ## Quick start
 
@@ -121,21 +112,23 @@ data/my_scene/
 
 ```bash
 bash run.sh data/my_scene checkpoints/pi3_matching.pt pi3 \
-  -m results/my_scene_pi3 (--calib data/my_scene/intr.yaml)
+  -m results/my_scene_pi3
 ```
 
 ### GS with Pi3X matching
 
 ```bash
 bash run.sh data/my_scene checkpoints/pi3x_matching.pt pi3x \
-  -m results/my_scene_pi3x (--calib data/my_scene/intr.yaml)
+  -m results/my_scene_pi3x
 ```
+
+To use known camera intrinsics, append `--calib data/my_scene/intr.yaml` to either command.
 
 ### Outputs
 
 ```text
 results/my_scene_pi3/
-├── slam/frames.txt          # raw frontend SLAM trajectory
+├── slam/frames.txt          # frontend camera trajectory
 ├── metadata.json           # online mapper state and metrics
 ├── point_clouds/           # online Gaussian/point exports
 └── <finetune_epoch>/

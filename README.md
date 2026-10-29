@@ -124,52 +124,21 @@ data/my_scene/
 │   ├── 000000.png
 │   ├── 000001.png
 │   └── ...
-└── intr.yaml
 ```
 
-Use zero-padded numeric filenames (or the supported `DSC<number>` convention)
-in temporal order. Images are sorted lexicographically. The exported timestamp
-field comes from the filename; it is not automatically a physical time in seconds.
-
-Example calibration, in pixels at the input-image resolution:
-
-```yaml
-width: 640
-height: 480
-calibration: [525.0, 525.0, 319.5, 239.5]  # fx, fy, cx, cy
-```
-
-These values are illustrative, **not required input dimensions**. Supply the
-actual calibration for your images. The self-captured loader uses RGB and camera
-calibration, not GT depth or GT camera poses. Without a calibration file, the
-loader's calibration-estimation path requires its auxiliary model assets.
-
-### Static GS with Pi3 matching (default)
+### GS with Pi3 matching
 
 ```bash
 bash run.sh data/my_scene checkpoints/pi3_matching.pt pi3 \
-  --calib data/my_scene/intr.yaml -m results/my_scene_pi3
+  -m results/my_scene_pi3 (--calib data/my_scene/intr.yaml)
 ```
 
-### Static GS with Pi3X matching
+### GS with Pi3X matching
 
 ```bash
 bash run.sh data/my_scene checkpoints/pi3x_matching.pt pi3x \
-  --calib data/my_scene/intr.yaml -m results/my_scene_pi3x
+  -m results/my_scene_pi3x (--calib data/my_scene/intr.yaml)
 ```
-
-Both commands use one GPU (`cuda:0`), GS mapping, dynamics disabled, every-eighth
-test views, the full input sequence, and 10,000 post-training optimization steps.
-For multi-GPU machines, select one GPU per independent experiment:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 bash run.sh data/my_scene checkpoints/pi3x_matching.pt pi3x \
-  --calib data/my_scene/intr.yaml -m results/my_scene_pi3x
-```
-
-Use distinct output directories. Camera intrinsics are used by the geometric
-pipeline; conditioning the Pi3X network on intrinsics is a separate explicit
-option (`--use_calib_for_inference`) and is not enabled by these commands.
 
 ### Outputs
 
@@ -184,33 +153,6 @@ results/my_scene_pi3/
     ├── test_images/
     └── colmap/
 ```
-
-The numeric final directory depends on the number of registered frames. Rendering
-metrics use mapper-refined cameras and exposure handling; they are not raw-SLAM
-pose metrics. A PLY export is not a complete optimizer-resume checkpoint.
-
-## Evaluation and reproducibility
-
-- Keep input sequence, calibration, checkpoint, mapper budget and test split fixed.
-- Report **registered-frame coverage** as well as PSNR, SSIM and LPIPS; do not hide
-  dropped frames by reporting only the successful subset.
-- Compare image metrics on common held-out views when registrations differ.
-- For pose evaluation, use `slam/frames.txt` and independently associated GT.
-  State whether ATE uses SE3 or Sim3 alignment; Sim3 corrects one global scale and
-  does not establish metric-scale accuracy.
-- Seeds are initialized, but CUDA reductions and mapping can still vary between
-  runs. Report repeated trials when judging small quality differences.
-- Training/smoke outputs and internal single-scene checkpoint comparisons are not
-  paper benchmark results and are not shipped in this repository.
-
-## Acknowledgements and licensing
-
-We build on [ARTDECO](https://github.com/InternRobotics/ARTDECO),
-[Pi3 / Pi3X](https://github.com/yyfz/Pi3),
-[SALAD](https://github.com/serizba/salad),
-[gsplat](https://github.com/nerfstudio-project/gsplat), and the third-party
-components bundled in this repository.
-Please retain their attribution and license notices.
 
 ## Contact and citation
 

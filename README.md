@@ -58,10 +58,6 @@ python -m pip install torch==2.10.0 torchvision==0.25.0 \
 python -m pip install -r requirements.txt
 ```
 
-If torch-scatter has no wheel matching your PyTorch/CUDA combination, build it
-against the installed PyTorch and CUDA toolkit. Do not silently replace it with
-an incompatible wheel. GPU compilation can take several minutes.
-
 ### Native extensions and auxiliary dependencies
 
 ```bash
@@ -95,11 +91,6 @@ Two different model assets are needed:
 | Pi3 **matching** checkpoint | User-supplied path with `config/yaml/pi3/pi3match.yaml` |
 | Pi3X **matching** checkpoint, as an alternative | User-supplied path with `config/yaml/pi3/pi3xmatch.yaml` |
 | SALAD retrieval checkpoint | `checkpoints/dino_salad.ckpt` |
-
-The matching model is not interchangeable with an unmodified base geometry
-checkpoint. Loading is strict: mismatched or missing heads fail explicitly.
-For `.pt`, the state dictionary is expected under the `model` key; a compatible
-`.safetensors` state dictionary is also supported. Load only trusted weights.
 
 The designated matching-weight repository is
 [`cskrren/M3`](https://huggingface.co/cskrren/M3) on Hugging Face.

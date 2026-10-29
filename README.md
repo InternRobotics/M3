@@ -103,25 +103,16 @@ For `.pt`, the state dictionary is expected under the `model` key; a compatible
 
 The designated matching-weight repository is
 [`cskrren/M3`](https://huggingface.co/cskrren/M3) on Hugging Face.
-**Pi3.pt (pi32) and Pi3X.pt (pi3x3) are available.** File sizes and SHA-256
-checksums were verified against the uploaded LFS metadata. See
-[weights.json](https://huggingface.co/cskrren/M3/blob/d1b4667e628329dee7fa293f5b9970e5ddcc44d8/weights.json)
-for exact revisions and checksums. No private
-bucket paths or credentials are distributed. Obtain SALAD assets under the
-upstream project's applicable terms.
-
-Download a selected file using the revision and SHA-256 from that manifest
-(set the variables below to its published values):
+**Pi3.pt (pi32) and Pi3X.pt (pi3x3) are available.**
 
 ```bash
-python scripts/download_checkpoint.py \
-  --filename "$RELEASE_FILENAME" --revision "$RELEASE_REVISION" \
-  --sha256 "$RELEASE_SHA256" --output checkpoints/matching.pt
+mkdir -p checkpoints
+wget https://huggingface.co/cskrren/M3/resolve/main/Pi3.pt -O checkpoints/pi3_matching.pt
+wget https://huggingface.co/cskrren/M3/resolve/main/Pi3X.pt -O checkpoints/pi3x_matching.pt
 ```
 
-The downloader defaults to `cskrren/M3`, verifies the checksum before creating the
-output file, and refuses to overwrite an existing file. Use the extension and
-Pi3/Pi3X configuration corresponding to the selected release artifact.
+Use the corresponding Pi3/Pi3X configuration for each checkpoint.
+Obtain SALAD assets under the upstream project's applicable terms.
 
 ## Quick start
 
@@ -227,12 +218,11 @@ For questions, contact [Kerui Ren](mailto:renkerui@sjtu.edu.cn).
 Please cite our paper:
 
 ```bibtex
-@article{ren2026m3,
-  title={M3: Dense Matching Meets Multi-View Foundation Models for Monocular Gaussian Splatting SLAM},
+@article{ren2026m,
+  title={M\^{} 3: Dense Matching Meets Multi-View Foundation Models for Monocular Gaussian Splatting SLAM},
   author={Ren, Kerui and Li, Guanghao and Jiang, Changjian and Xu, Yingxiang and Lu, Tao and Xu, Linning and Dong, Junting and Pang, Jiangmiao and Yu, Mulin and Dai, Bo},
   journal={arXiv preprint arXiv:2603.16844},
-  year={2026},
-  note={Accepted to SIGGRAPH Asia 2026}
+  year={2026}
 }
 ```
 

@@ -1,0 +1,29 @@
+# Install a matching CUDA-enabled torch/torchvision pair first (see README).
+numpy>=1.26
+scipy
+Pillow
+opencv-python
+einops
+tqdm
+PyYAML
+omegaconf
+hydra-core
+huggingface-hub
+safetensors
+timm
+pypose
+kornia
+plyfile
+open3d
+lpips
+gsplat==1.5.3
+torch-scatter==2.1.2
+triton; sys_platform == 'linux'
+pytorch-lightning
+torchmetrics
+pytorch-metric-learning
+faiss-cpu
+matplotlib
+scikit-learn
+roma
+websockets

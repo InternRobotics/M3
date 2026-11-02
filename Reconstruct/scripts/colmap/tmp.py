@@ -2,8 +2,8 @@
 import os
 import shutil
 
-input_dir = 'D:\\Users\\zhengzhewen\\datasets\\l1\\3f\\bedroom-20250611-para-flattened\\images'
-output_dir = 'D:\\Users\\zhengzhewen\\datasets\\l1\\3f\\bedroom-20250611-para\\images'
+input_dir = '/path/to/output/images'
+output_dir = '/path/to/scene/images'
 
 for fname in os.listdir(input_dir):
     if not (fname.lower().endswith('.jpg') or fname.lower().endswith('.png')):

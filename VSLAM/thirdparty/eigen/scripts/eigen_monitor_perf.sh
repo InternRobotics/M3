@@ -22,4 +22,4 @@ ALLFILES="$BENCH_PATH/*.png $BENCH_PATH/*.html $BENCH_PATH/index.html $BENCH_PAT
 rsync -az --no-p --delete $ALLFILES $USER@ssh.tuxfamily.org:eigen/eigen.tuxfamily.org-web/htdocs/$UPLOAD_DIR/ || { echo "upload failed"; exit 1; }
 
 # fix the perm
-ssh $USER@ssh.tuxfamily.org "chmod -R g+w /home/eigen/eigen.tuxfamily.org-web/htdocs/perf_monitoring" || { echo "perm failed"; exit 1; }
+ssh $USER@ssh.tuxfamily.org "chmod -R g+w /path/to/eigen.tuxfamily.org-web/htdocs/perf_monitoring" || { echo "perm failed"; exit 1; }

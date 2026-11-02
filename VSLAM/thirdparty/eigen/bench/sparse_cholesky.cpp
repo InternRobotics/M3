@@ -4,16 +4,16 @@
 #include <Eigen/Sparse>
 
 // g++ -DSIZE=10000 -DDENSITY=0.001  sparse_cholesky.cpp -I.. -DDENSEMATRI -O3 -g0 -DNDEBUG   -DNBTRIES=1 -I
-// /home/gael/Coding/LinearAlgebra/taucs_full/src/ -I/home/gael/Coding/LinearAlgebra/taucs_full/build/linux/
-// -L/home/gael/Coding/LinearAlgebra/taucs_full/lib/linux/ -ltaucs /home/gael/Coding/LinearAlgebra/GotoBLAS/libgoto.a
-// -lpthread -I /home/gael/Coding/LinearAlgebra/SuiteSparse/CHOLMOD/Include/ $CHOLLIB -I
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/UFconfig/
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/CCOLAMD/Lib/libccolamd.a
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/CHOLMOD/Lib/libcholmod.a -lmetis
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/AMD/Lib/libamd.a
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/CAMD/Lib/libcamd.a
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/CCOLAMD/Lib/libccolamd.a
-// /home/gael/Coding/LinearAlgebra/SuiteSparse/COLAMD/Lib/libcolamd.a -llapack && ./a.out
+// /path/to/Coding/LinearAlgebra/taucs_full/src/ -I/path/to/Coding/LinearAlgebra/taucs_full/build/linux/
+// -L/path/to/Coding/LinearAlgebra/taucs_full/lib/linux/ -ltaucs /path/to/Coding/LinearAlgebra/GotoBLAS/libgoto.a
+// -lpthread -I /path/to/Coding/LinearAlgebra/SuiteSparse/CHOLMOD/Include/ $CHOLLIB -I
+// /path/to/Coding/LinearAlgebra/SuiteSparse/UFconfig/
+// /path/to/Coding/LinearAlgebra/SuiteSparse/CCOLAMD/Lib/libccolamd.a
+// /path/to/Coding/LinearAlgebra/SuiteSparse/CHOLMOD/Lib/libcholmod.a -lmetis
+// /path/to/Coding/LinearAlgebra/SuiteSparse/AMD/Lib/libamd.a
+// /path/to/Coding/LinearAlgebra/SuiteSparse/CAMD/Lib/libcamd.a
+// /path/to/Coding/LinearAlgebra/SuiteSparse/CCOLAMD/Lib/libccolamd.a
+// /path/to/Coding/LinearAlgebra/SuiteSparse/COLAMD/Lib/libcolamd.a -llapack && ./a.out
 
 #define NOGMM
 #define NOMTL

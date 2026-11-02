@@ -11,7 +11,7 @@ w, h = 1296, 972  # width, height
 cx, cy = 648.0, 486.0  # principal point
 f = 1517.6684216796323 * w / 2592
 
-bdir = Path('D:/Users/zhengzhewen/datasets/l1/3f/bedroom/bedroom-20250611-2_full/usb0/slam')
+bdir = Path('/path/to/scene/slam')
 pts = np.load(bdir / 'pts.npy', allow_pickle=True).reshape(-1, 3)[None]
 
 N = len(pts)

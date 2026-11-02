@@ -38,7 +38,7 @@ class ReleaseContract(unittest.TestCase):
         for folder in ('VSLAM','Reconstruct','config','dataloaders'):
             for p in (ROOT/folder).rglob('*'):
                 if p.suffix not in ('.py','.sh','.yaml') or {'thirdparty','submodules'} & set(p.parts):continue
-                for marker in ('/cpfs/','/shared-data/','/home/renkerui','/root/'):
+                for marker in ('/cpfs/','/shared-data/','/home/','/root/'):
                     self.assertNotIn(marker,p.read_text(),str(p))
 
     def test_optimizer_api_sources(self):

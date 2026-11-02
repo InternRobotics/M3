@@ -12,7 +12,7 @@ def filter_model(cameras, images, cond):
     new_cameras = {k: cameras[k] for k in new_camera_keys}
     return new_cameras, new_images
 
-data_dir = Path('D:\\Users\\zhengzhewen\\datasets\\l1\\3f\\bedroom-20250611-para')
+data_dir = Path('/path/to/scene')
 input_dir = data_dir / 'rectified'
 new_model = data_dir.parent / (data_dir.name + '-new')
 output_dir = new_model / 'sparse/0'

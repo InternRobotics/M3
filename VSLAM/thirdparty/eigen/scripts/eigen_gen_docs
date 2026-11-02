@@ -18,7 +18,7 @@ mkdir build -p
 rsync -az --no-p --delete build/doc/html/ $USER@ssh.tuxfamily.org:eigen/eigen.tuxfamily.org-web/htdocs/$UPLOAD_DIR/ || { echo "upload failed"; exit 1; }
 
 #step 3 : fix the perm
-ssh $USER@ssh.tuxfamily.org "chmod -R g+w /home/eigen/eigen.tuxfamily.org-web/htdocs/$UPLOAD_DIR" || { echo "perm failed"; exit 1; }
+ssh $USER@ssh.tuxfamily.org "chmod -R g+w /path/to/eigen.tuxfamily.org-web/htdocs/$UPLOAD_DIR" || { echo "perm failed"; exit 1; }
 
 echo "Uploaded successfully"
 

@@ -30,7 +30,7 @@ class DINOv2(nn.Module):
 
         assert model_name in DINOV2_ARCHS.keys(), f'Unknown model name {model_name}'
         self.model = torch.hub.load(
-            '/shared-data/renkerui/projects/artdeco_compare_20261027/deps/torch_cache/hub/facebookresearch_dinov2_main', 
+            '/path/to/dinov2',
             model_name, 
             source='local'
         )

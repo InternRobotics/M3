@@ -22,7 +22,7 @@ def flatten_model(images):
     return {k: v._replace(name=v.name.replace('/', '_')) for k, v in images.items()}
     
 
-data_dir = Path('D:\\Users\\zhengzhewen\\datasets\\l1\\3f\\bedroom-20250611-para-new')
+data_dir = Path('/path/to/scene')
 new_model = data_dir.parent / (data_dir.name + '-flattened')
 output_dir = new_model / 'sparse/0'
 output_dir.mkdir(parents=True, exist_ok=True)

@@ -1,9 +1,9 @@
 
-// g++ -O3 -g0 -DNDEBUG  sparse_product.cpp -I.. -I/home/gael/Coding/LinearAlgebra/mtl4/ -DDENSITY=0.005 -DSIZE=10000 &&
-// ./a.out g++ -O3 -g0 -DNDEBUG  sparse_product.cpp -I.. -I/home/gael/Coding/LinearAlgebra/mtl4/ -DDENSITY=0.05
+// g++ -O3 -g0 -DNDEBUG  sparse_product.cpp -I.. -I/path/to/Coding/LinearAlgebra/mtl4/ -DDENSITY=0.005 -DSIZE=10000 &&
+// ./a.out g++ -O3 -g0 -DNDEBUG  sparse_product.cpp -I.. -I/path/to/Coding/LinearAlgebra/mtl4/ -DDENSITY=0.05
 // -DSIZE=2000 && ./a.out
 //  -DNOGMM -DNOMTL -DCSPARSE
-//  -I /home/gael/Coding/LinearAlgebra/CSparse/Include/ /home/gael/Coding/LinearAlgebra/CSparse/Lib/libcsparse.a
+//  -I /path/to/Coding/LinearAlgebra/CSparse/Include/ /path/to/Coding/LinearAlgebra/CSparse/Lib/libcsparse.a
 
 #include <typeinfo>
 

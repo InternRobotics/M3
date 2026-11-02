@@ -26,7 +26,7 @@ def qvec2rotmat(qvec):
 
 # Usage:
 # Assuming you have an ImageDataset instance called 'dataset'
-base_dir = Path('D:/Users/zhengzhewen/datasets/l1/3f/bedroom/bedroom-20250611-2_full/usb0/slam')
+base_dir = Path('/path/to/scene/slam')
 pointmaps_path = base_dir / 'frame_point_per.npy'  # Replace with your actual path
 tum_pose_path = base_dir / '0_frames.txt'  # Replace with your actual path
 pointmaps = np.load(pointmaps_path) # .reshape(-1, 512, 384, 3)
